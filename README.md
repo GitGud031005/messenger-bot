@@ -1,168 +1,366 @@
 # 🤖 Messenger Bot — Powered by Google Gemini
 
-Bot AI cho nhóm chat Facebook Messenger, sử dụng Google Gemini để trả lời câu hỏi, ghi nhớ thông tin, và hỗ trợ nhóm bạn.
+An AI bot for Facebook Messenger group chats, using Google Gemini to answer questions, remember information, and support your group.
 
-## ✨ Tính năng
+## ✨ Features
 
-- **🧠 AI thông minh** — Trả lời câu hỏi bằng Google Gemini (3.1 Flash Lite + fallback 2.5 Flash Lite)
-- **📌 Đọc tin nhắn ghim** — Tóm tắt nội dung tin nhắn ghim khi được hỏi
-- **💾 Ghi nhớ** — Nhớ các thông tin quan trọng (lịch hẹn, deadline, v.v.) khi được nhờ
-- **🔔 Nhắc nhở** — Nhắc lại thông tin đã ghi nhớ khi được hỏi
-- **💬 Tiếng Việt** — Giao tiếp tự nhiên bằng tiếng Việt
-- **⏱️ Bộ nhớ hội thoại** — Nhớ ngữ cảnh cuộc trò chuyện theo từng thread
+- **🧠 Smart AI** — Answers questions using Google Gemini (3.1 Flash Lite + fallback 2.5 Flash Lite)
+- **📌 Read Pinned Messages** — Summarizes the content of pinned messages when asked
+- **💾 Memorization** — Remembers important information (meetings, deadlines, etc.) when requested
+- **🔔 Reminders** — Recalls memorized information when asked
+- **💬 Vietnamese Support** — Communicates naturally in Vietnamese (the bot's system prompt is optimized for Vietnamese)
+- **⏱️ Conversation Memory** — Remembers conversation context per chat thread
 
-## 📋 Yêu cầu
+---
 
-- [Node.js](https://nodejs.org/) **v18+**
-- Tài khoản Facebook (nên dùng tài khoản test)
-- [Google Gemini API Key](https://aistudio.google.com/) (miễn phí)
-- Extension **C3C UFC Utility** (Chrome/Edge/Firefox)
+## 📋 System Requirements
 
-## 🚀 Cài đặt
+| Requirement | Details |
+|---|---|
+| **Node.js** | Version **18** or higher — [Download here](https://nodejs.org/) |
+| **Git** | To clone the project — [Download here](https://git-scm.com/) |
+| **Facebook Account** | A **test/secondary account** is recommended (risk of being locked/banned if using a main account) |
+| **Google Gemini API Key** | Free — [Get it here](https://aistudio.google.com/) |
+| **Chrome/Edge Browser** | To install the extension for exporting Facebook cookies |
 
-### 1. Clone và cài dependencies
+---
+
+## 🚀 Installation Guide (Step-by-Step)
+
+### Step 1 — Clone the project and install dependencies
+
+Open **Terminal** (or **Command Prompt** / **PowerShell** on Windows):
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/GitGud031005/messenger-bot.git
 cd messenger-bot
 npm install
 ```
 
-### 2. Lấy Gemini API Key
+> ✅ If you see `added XXX packages` → successful.
+> ❌ If you get `node: command not found` error → Node.js is not installed, [download here](https://nodejs.org/).
 
-1. Truy cập [Google AI Studio](https://aistudio.google.com/)
-2. Tạo API key mới
-3. Copy key
+---
 
-### 3. Lấy AppState (Cookie Facebook)
+### Step 2 — Get Google Gemini API Key
 
-1. Cài extension **C3C UFC Utility** cho trình duyệt
-2. Đăng nhập Facebook bằng **tài khoản bot** (KHÔNG dùng tài khoản chính!)
-3. Bấm vào extension → **Export**
-4. Lưu file thành `appstate.json` tại thư mục gốc của project
+1. Go to **[Google AI Studio](https://aistudio.google.com/)**
+2. Log in with your Google account
+3. Click **"Get API Key"** (or **"Create API Key"**)
+4. Click **"Create API key in new project"**
+5. **Copy the API key** (looks like `AIzaSy...`) — save it for Step 4
 
-### 4. Cấu hình .env
+> 💡 The API key is free with daily usage limits, which is sufficient for small group chats.
 
+---
+
+### Step 3 — Get AppState (Facebook Login Cookie)
+
+AppState is a file containing your Facebook login session cookies, allowing the bot to "log in" without needing an email or password.
+
+#### 3.1 — Install the C3C UFC Utility extension
+
+1. Open **Chrome** or **Edge** browser
+2. Go to the [Chrome Web Store](https://chromewebstore.google.com/) and search for **"C3C UFC Utility"**
+3. Click **"Add to Chrome"** → **"Add extension"**
+
+> ⚠️ If you cannot find it on the Chrome Web Store, search for "C3C UFC Utility github" on Google to install it manually.
+
+#### 3.2 — Export Facebook cookies
+
+1. Open a new tab → Go to [facebook.com](https://www.facebook.com)
+2. **Log in with the Facebook account** you want the bot to use
+3. After logging in successfully, click the **C3C UFC Utility extension icon** in the top right corner of the browser
+4. Click the **"Export"** button
+5. A JSON file will be downloaded
+
+#### 3.3 — Place the file in the project
+
+1. **Rename** the downloaded file to `appstate.json`
+2. **Move** the file to the **root directory** of the project:
+
+```
+messenger-bot/
+├── appstate.json   ← PLACE FILE HERE
+├── package.json
+├── src/
+└── ...
+```
+
+> 🔒 **SECURITY:** The `appstate.json` file contains your Facebook session. Anyone with this file can access your Facebook account. **NEVER** share this file. The file has been added to `.gitignore` so it won't be pushed to GitHub.
+
+---
+
+### Step 4 — Configure the .env file
+
+#### 4.1 — Create the .env file
+
+**Windows (Command Prompt):**
+```cmd
+copy .env.example .env
+```
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item .env.example .env
+```
+
+**macOS / Linux:**
 ```bash
 cp .env.example .env
 ```
 
-Mở file `.env` và điền thông tin:
+#### 4.2 — Edit the .env file
+
+Open the `.env` file with any text editor (VS Code, Notepad, etc.) and modify the values:
 
 ```env
-GEMINI_API_KEY=your_actual_api_key_here
+# ──────────────────────────────────────────────
+# Google Gemini
+# ──────────────────────────────────────────────
+GEMINI_API_KEY=AIzaSy...paste_your_api_key_here
 GEMINI_MODEL=gemini-3.1-flash-lite
 GEMINI_FALLBACK_MODEL=gemini-2.5-flash-lite
-BOT_NAME=TênBotCủaBạn
+
+# ──────────────────────────────────────────────
+# Bot Configuration
+# ──────────────────────────────────────────────
+BOT_NAME=BotDisplayName
+# Cooldown in seconds between commands per user
+COOLDOWN_SECONDS=5
+# Chat memory expiry in minutes (per thread)
+MEMORY_EXPIRY_MINUTES=30
+
+# ──────────────────────────────────────────────
+# Logging
+# ──────────────────────────────────────────────
+LOG_LEVEL=info
 ```
 
-### 5. Chạy bot
+**Variable Explanations:**
+
+| Variable | Required | Description |
+|---|---|---|
+| `GEMINI_API_KEY` | ✅ Yes | API key from Google AI Studio (Step 2) |
+| `GEMINI_MODEL` | No | Primary AI model (default: `gemini-3.1-flash-lite`) |
+| `GEMINI_FALLBACK_MODEL` | No | Fallback model when the primary fails (default: `gemini-2.5-flash-lite`) |
+| `BOT_NAME` | No | Display name in logs (default: `GeminiBot`) |
+| `COOLDOWN_SECONDS` | No | Cooldown time in seconds between commands (default: `5` seconds) |
+| `MEMORY_EXPIRY_MINUTES` | No | Conversation context memory duration (default: `30` minutes) |
+| `LOG_LEVEL` | No | Logging level: `error`, `warn`, `info`, `debug` (default: `info`) |
+
+---
+
+### Step 5 — Run the bot (Locally)
 
 ```bash
-# Development (auto-restart khi thay đổi code)
+# Development Mode (auto-restarts when files change)
 npm run dev
 
-# Production
+# Production Mode
 npm start
 ```
 
-## 💬 Cách sử dụng
-
-### Tag bot trong nhóm chat
-
+**When the bot starts successfully, you will see:**
 ```
-@TênBot hôm nay trời thế nào?
-@TênBot nhớ giùm là mai họp lúc 9h sáng
-@TênBot deadline tuần này là gì?
+2026-06-10 15:00:00 info [main]: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2026-06-10 15:00:00 info [main]: 🤖 Messenger Bot — Starting up...
+2026-06-10 15:00:00 info [commands]: Loaded command: /ai
+2026-06-10 15:00:00 info [commands]: Loaded command: /help
+2026-06-10 15:00:00 info [commands]: Loaded command: /ping
+2026-06-10 15:00:01 info [facebook]: ✅ Logged in successfully! Bot user ID: 100xxx
+2026-06-10 15:00:01 info [main]: 👂 Listening for messages...
+2026-06-10 15:00:01 info [main]: ✅ Bot is ready!
 ```
 
-### Lệnh prefix
+> 💡 Press `Ctrl + C` to stop the bot.
 
-| Lệnh | Mô tả |
+---
+
+## ☁️ Deploy to Cloud for Free (Render.com)
+
+If you want the bot to run 24/7 without keeping your computer on, deploy it to Render.
+
+### Step 1 — Encode AppState to Base64
+
+On cloud servers, you cannot directly upload the `appstate.json` file. Instead, encode it into a Base64 string and set it as an environment variable.
+
+Run the following command in the project directory (ensure `appstate.json` exists in the root):
+
+```bash
+node scripts/encode-appstate.js
+```
+
+**A long string will be outputted. Copy the entire string.**
+
+### Step 2 — Push Code to GitHub
+
+```bash
+git add -A
+git commit -m "deploy to render"
+git push origin main
+```
+
+> ⚠️ Ensure `appstate.json` and `.env` are **NOT** pushed (they are already included in `.gitignore`).
+
+### Step 3 — Create a Render Account
+
+1. Go to [render.com](https://render.com)
+2. Click **"Get Started for Free"**
+3. Sign up using **GitHub** (recommended/easiest)
+
+### Step 4 — Create a New Web Service
+
+1. On the Dashboard, click **"New +"** → select **"Web Service"**
+2. Choose **"Build and deploy from a Git repository"** → **Next**
+3. Find and select your **`messenger-bot`** repository → **Connect**
+
+### Step 5 — Configure the Service
+
+Fill in the configuration details as follows:
+
+| Field | Value |
 |---|---|
-| `/ai <câu hỏi>` | Hỏi AI bất cứ điều gì |
-| `/help` | Xem danh sách lệnh |
-| `/ping` | Kiểm tra bot có đang hoạt động không |
+| **Name** | `messenger-bot` (or any name you prefer) |
+| **Region** | `Singapore` (closest to Vietnam) |
+| **Branch** | `main` |
+| **Runtime** | `Node` |
+| **Build Command** | `npm install` |
+| **Start Command** | `npm start` |
+| **Instance Type** | **Free** |
 
-### Aliases (lệnh tắt)
+### Step 6 — Add Environment Variables
 
-- `/hỏi` = `/ai`
-- `/ask` = `/ai`
-- `/menu` = `/help`
-- `/lệnh` = `/help`
-- `/p` = `/ping`
+Scroll down to the **"Environment Variables"** section and click **"Add Environment Variable"** for each of the following:
 
-## 🏗️ Cấu trúc dự án
+| Key | Value |
+|---|---|
+| `GEMINI_API_KEY` | Your Google AI Studio API key |
+| `APPSTATE_BASE64` | The Base64 string copied from Step 1 |
+| `BOT_NAME` | Bot display name (e.g., `GeminiBot`) |
+| `GEMINI_MODEL` | `gemini-3.1-flash-lite` |
+| `GEMINI_FALLBACK_MODEL` | `gemini-2.5-flash-lite` |
+
+> 💡 The `RENDER_EXTERNAL_URL` variable is automatically provided by Render. The bot uses it to self-ping and prevent the service from spinning down.
+
+### Step 7 — Deploy!
+
+1. Click **"Create Web Service"**
+2. Render will automatically build and deploy the application
+3. Wait for the logs to show **"✅ Bot is ready!"** → The bot is online!
+4. Visit the service URL (e.g., `https://messenger-bot-xxxx.onrender.com/health`) to verify status
+
+---
+
+## 💬 How to Use
+
+### Mention the Bot in Group Chats
+
+Open the Messenger group chat where the bot account is added, mention (tag) the bot, and ask:
+
+```
+@BotName what is the weather like today?
+@BotName remember that we have a meeting tomorrow at 9 AM
+@BotName what are the deadlines for this week?
+@BotName read the pinned messages please
+```
+
+### Prefix Commands (Using `/`)
+
+| Command | Description | Example |
+|---|---|---|
+| `/ai <question>` | Ask the AI anything | `/ai tell a joke` |
+| `/help` | View the list of commands | `/help` |
+| `/ping` | Check if the bot is responsive | `/ping` |
+
+### Aliases (Shortcuts)
+
+| Alias | Equivalent to |
+|---|---|
+| `/hỏi` | `/ai` |
+| `/ask` | `/ai` |
+| `/menu` | `/help` |
+| `/lệnh` | `/help` |
+| `/p` | `/ping` |
+
+### Memorization Feature
+
+The bot will automatically memorize information when you use keywords like:
+
+```
+@Bot nhớ giùm là thứ 6 deadline nộp bài
+@Bot ghi nhớ số điện thoại anh A là 0901234567
+@Bot remind me lịch họp ngày mai lúc 2h chiều
+```
+
+And you can ask it to recall those reminders at any time:
+
+```
+@Bot deadline tuần này là gì?
+@Bot nhắc lại số điện thoại anh A
+```
+
+---
+
+## 🏗️ Project Structure
 
 ```
 messenger-bot/
 ├── src/
-│   ├── index.js              # Entry point
-│   ├── config.js             # Cấu hình environment
+│   ├── index.js              # Entry point + HTTP keep-alive server
+│   ├── config.js             # Environment variables configuration
 │   ├── commands/
-│   │   ├── index.js          # Auto-load commands
-│   │   ├── ai.js             # Lệnh /ai
-│   │   ├── help.js           # Lệnh /help
-│   │   └── ping.js           # Lệnh /ping
+│   │   ├── index.js          # Autoloads all commands
+│   │   ├── ai.js             # /ai command — query Gemini AI
+│   │   ├── help.js           # /help command — list available commands
+│   │   └── ping.js           # /ping command — verify bot status
 │   ├── handlers/
-│   │   ├── message.js        # Xử lý tin nhắn
-│   │   └── event.js          # Xử lý sự kiện nhóm
+│   │   ├── message.js        # Handles incoming messages (mention & prefix routing)
+│   │   └── event.js          # Handles group events (user join/leave)
 │   ├── services/
-│   │   ├── facebook.js       # Đăng nhập & quản lý session
-│   │   └── gemini.js         # Tích hợp Gemini AI
+│   │   ├── facebook.js       # Facebook login & session manager
+│   │   └── gemini.js         # Gemini AI integration + conversation memory
 │   └── utils/
-│       ├── logger.js         # Logging với Winston
-│       ├── cooldown.js       # Chống spam
-│       └── formatter.js      # Format tin nhắn
-├── appstate.json             # Cookie Facebook (KHÔNG COMMIT!)
-├── .env                      # API keys (KHÔNG COMMIT!)
-├── .env.example              # Template .env
-├── .gitignore
-├── package.json
-└── README.md
+│       ├── logger.js         # Winston logger (console + files)
+│       ├── cooldown.js       # Anti-spam rate limiting
+│       └── formatter.js      # Formats message responses for Messenger
+├── scripts/
+│   └── encode-appstate.js    # Encodes appstate.json to Base64
+├── appstate.json             # Facebook session cookies (⚠️ DO NOT COMMIT!)
+├── .env                      # API keys & configuration (⚠️ DO NOT COMMIT!)
+├── .env.example              # Template file for environment variables
+├── .gitignore                # Prevents committing sensitive files
+├── package.json              # Project dependencies & scripts
+└── README.md                 # This file
 ```
 
-## ☁️ Deploy miễn phí
+---
 
-### Render.com (Recommended)
+## ⚠️ Important Considerations
 
-1. Push code lên GitHub (đảm bảo `.gitignore` đã loại `appstate.json` và `.env`)
-2. Tạo tài khoản [Render](https://render.com)
-3. New → **Background Worker**
-4. Connect GitHub repo
-5. Build Command: `npm install`
-6. Start Command: `npm start`
-7. Thêm Environment Variables:
-   - `GEMINI_API_KEY` = your key
-   - `GEMINI_MODEL` = gemini-3.1-flash-lite
-   - `GEMINI_FALLBACK_MODEL` = gemini-2.5-flash-lite
-   - `BOT_NAME` = TênBot
-8. Với `appstate.json`: Encode nội dung thành base64, thêm env var `APPSTATE_BASE64`
-   - Cần chỉnh code để đọc từ env var nếu file không tồn tại
+- **DO NOT** use your primary Facebook account — there is a significant risk of account suspension/ban.
+- **DO NOT** commit `appstate.json` or `.env` to GitHub.
+- **DO NOT** spam messages continuously — Facebook will flag and lock the account.
+- The `@dongdev/fca-unofficial` library may stop working if Facebook changes its protocol.
+- It is recommended to keep `COOLDOWN_SECONDS` at `5` or higher to avoid bot detection.
+- The AppState (cookie) will expire over time — you will need to re-export it if login errors occur.
 
-### Railway.app (Alternative)
+---
 
-1. Tạo tài khoản [Railway](https://railway.app)
-2. New Project → Deploy from GitHub
-3. Thêm environment variables tương tự
+## 🔧 Troubleshooting Common Errors
 
-## ⚠️ Lưu ý quan trọng
+| Error | Root Cause | Solution |
+|---|---|---|
+| `No appstate found` | Missing `appstate.json` or environment variable | Export cookies using C3C UFC Utility (see Step 3) |
+| `Not logged in` | Cookies/session expired | Log back into Facebook → re-export `appstate.json` |
+| `login-approval` | Facebook requires security verification (2FA/approvals) | Log in manually, approve the login, then re-export AppState |
+| `Both models failed` | Invalid API key or quota exceeded | Check your API key at [AI Studio](https://aistudio.google.com/) |
+| `Missing required environment variable` | Missing `.env` file or environment variables | Copy `.env.example` to `.env` and fill in all fields |
+| Bot does not reply | Bot account is not in the group or incorrect tag | Add the bot account to the group, and tag its exact display name |
+| `APPSTATE_BASE64` error on Render | Corrupted or truncated Base64 string | Run `node scripts/encode-appstate.js` again and copy the string carefully |
+| Render service stopped | Reached free tier limit (750 free hours/month) | Wait for the next month or upgrade your Render plan |
 
-- **KHÔNG** dùng tài khoản Facebook chính — nguy cơ bị khóa tài khoản
-- **KHÔNG** commit `appstate.json` hoặc `.env` lên GitHub
-- **KHÔNG** gửi tin nhắn spam — Facebook sẽ khóa tài khoản
-- Thư viện `fca-unofficial` có thể ngưng hoạt động khi Facebook cập nhật
-- Nên giữ cooldown ≥ 5 giây để tránh bị phát hiện
-
-## 🔧 Khắc phục lỗi
-
-| Lỗi | Giải pháp |
-|---|---|
-| `appstate.json not found` | Xuất lại cookie bằng C3C UFC Utility |
-| `Not logged in` | Session hết hạn → xuất lại appstate.json |
-| `login-approval` | Facebook yêu cầu xác minh → đăng nhập thủ công rồi xuất lại |
-| `Both models failed` | Kiểm tra API key và quota tại [AI Studio](https://aistudio.google.com/) |
-| Bot không phản hồi | Kiểm tra bot có trong nhóm chat không, và đã tag đúng tên bot |
+---
 
 ## 📄 License
 

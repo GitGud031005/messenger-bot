@@ -1,3 +1,4 @@
+import http from "http";
 import config from "./config.js";
 import { loginFacebook } from "./services/facebook.js";
 import { cleanupSessions } from "./services/gemini.js";
@@ -72,7 +73,52 @@ async function main() {
     cleanupSessions();
   }, 5 * 60 * 1000); // Every 5 minutes
 
+  // Step 5: Start HTTP health-check server (required for Render free tier)
+  startKeepAliveServer();
+
   log.info("✅ Bot is ready! Tag @%s in a group chat to interact.", config.botName);
+}
+
+// ─── HTTP Keep-Alive Server ───
+// Render free tier requires an HTTP listener and spins down after 15 min idle.
+// This minimal server provides a /health endpoint for uptime monitors.
+function startKeepAliveServer() {
+  const startTime = Date.now();
+
+  const server = http.createServer((req, res) => {
+    if (req.url === "/health" || req.url === "/") {
+      const uptime = Math.floor((Date.now() - startTime) / 1000);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({
+        status: "ok",
+        bot: config.botName,
+        uptime: `${uptime}s`,
+        timestamp: new Date().toISOString(),
+      }));
+    } else {
+      res.writeHead(404);
+      res.end("Not found");
+    }
+  });
+
+  server.listen(config.port, () => {
+    log.info("🌐 Keep-alive server running on port %d", config.port);
+    log.info("   Health check: http://localhost:%d/health", config.port);
+  });
+
+  // Self-ping every 13 minutes to prevent Render's 15-min idle spin-down
+  if (process.env.RENDER_EXTERNAL_URL) {
+    const pingUrl = `${process.env.RENDER_EXTERNAL_URL}/health`;
+    setInterval(async () => {
+      try {
+        await fetch(pingUrl);
+        log.debug("Self-ping OK → %s", pingUrl);
+      } catch (err) {
+        log.warn("Self-ping failed: %s", err.message);
+      }
+    }, 13 * 60 * 1000); // Every 13 minutes
+    log.info("🔄 Self-ping enabled → %s (every 13 min)", pingUrl);
+  }
 }
 
 // ─── Global error handlers ───

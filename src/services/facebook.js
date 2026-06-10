@@ -13,30 +13,61 @@ let api = null;
 let botUserId = null;
 
 /**
- * Login to Facebook using saved appstate.json.
+ * Login to Facebook using saved appstate.json or APPSTATE_BASE64 env var.
  * Returns the FCA API instance.
  */
 export function loginFacebook() {
   return new Promise((resolve, reject) => {
-    // Check appstate.json exists
-    if (!fs.existsSync(APPSTATE_PATH)) {
+    let appState;
+
+    // Priority 1: Load from appstate.json file (local development)
+    if (fs.existsSync(APPSTATE_PATH)) {
+      try {
+        appState = JSON.parse(fs.readFileSync(APPSTATE_PATH, "utf8"));
+        log.info("Loaded appstate from file");
+      } catch (err) {
+        log.error("Failed to parse appstate.json: %s", err.message);
+        reject(new Error("Invalid appstate.json"));
+        return;
+      }
+    }
+    // Priority 2: Load from APPSTATE_BASE64 env var (cloud deployment)
+    else if (process.env.APPSTATE_BASE64) {
+      try {
+        const decoded = Buffer.from(process.env.APPSTATE_BASE64, "base64").toString("utf8");
+        appState = JSON.parse(decoded);
+        log.info("Loaded appstate from APPSTATE_BASE64 env var");
+      } catch (err) {
+        log.error("Failed to decode APPSTATE_BASE64: %s", err.message);
+        reject(new Error("Invalid APPSTATE_BASE64"));
+        return;
+      }
+    }
+    // Priority 3: Load from APPSTATE_JSON env var (plain JSON, alternative)
+    else if (process.env.APPSTATE_JSON) {
+      try {
+        appState = JSON.parse(process.env.APPSTATE_JSON);
+        log.info("Loaded appstate from APPSTATE_JSON env var");
+      } catch (err) {
+        log.error("Failed to parse APPSTATE_JSON: %s", err.message);
+        reject(new Error("Invalid APPSTATE_JSON"));
+        return;
+      }
+    }
+    // No appstate found anywhere
+    else {
       log.error(
-        "appstate.json not found! Follow these steps:\n" +
+        "No appstate found! Provide one of:\n" +
+        "  A) appstate.json file in project root (local dev)\n" +
+        "  B) APPSTATE_BASE64 env var (cloud deploy — base64 encoded)\n" +
+        "  C) APPSTATE_JSON env var (cloud deploy — raw JSON)\n\n" +
+        "To get appstate:\n" +
         "  1. Install the 'C3C UFC Utility' browser extension\n" +
         "  2. Log into Facebook with your bot account\n" +
         "  3. Click the extension → Export\n" +
-        "  4. Save the file as 'appstate.json' in the project root"
+        "  4. Save as appstate.json or encode to base64"
       );
-      reject(new Error("appstate.json not found"));
-      return;
-    }
-
-    let appState;
-    try {
-      appState = JSON.parse(fs.readFileSync(APPSTATE_PATH, "utf8"));
-    } catch (err) {
-      log.error("Failed to parse appstate.json: %s", err.message);
-      reject(new Error("Invalid appstate.json"));
+      reject(new Error("No appstate found"));
       return;
     }
 

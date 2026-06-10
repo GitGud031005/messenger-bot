@@ -30,6 +30,9 @@ const config = Object.freeze({
   cooldownSeconds: parseInt(optional("COOLDOWN_SECONDS", "5"), 10),
   memoryExpiryMinutes: parseInt(optional("MEMORY_EXPIRY_MINUTES", "30"), 10),
 
+  // Server (for cloud keep-alive)
+  port: parseInt(optional("PORT", "3000"), 10),
+
   // Logging
   logLevel: optional("LOG_LEVEL", "info"),
 });
