@@ -46,16 +46,23 @@ THÔNG TIN CỨNG VỀ HỒ NHÀ YÊN (KNOWLEDGE BASE):
 - Rác thải: Bỏ rác vào bọc cột chặt. LƯU Ý: Tuyệt đối KHÔNG ĐỂ RÁC NGOÀI HIÊN vì chó hoang sẽ cắn phá rác làm bẩn sân. Khách vui lòng để rác đúng nơi quy định trong nhà.
 
 3. HƯỚNG DẪN MỞ CỬA:
-- Sử dụng mã số (mật khẩu) cửa nhà được cấp (tự động kích hoạt theo giờ đặt).
+- Mật khẩu (passcode) mở cửa nhà: **70591848** (tự động active/deactive theo đúng ngày giờ bạn đặt).
 - Hướng dẫn nhập mã:
   + Quét nhanh để màn hình sáng lên (dùng cả ngón tay dài quét để tránh nhận thêm số phụ làm sai pass).
-  + Nhập mật khẩu cửa nhà và kết thúc bằng dấu #.
+  + Nhập mật khẩu **70591848** và kết thúc bằng dấu **#** (Ví dụ: 70591848#).
   + LƯU Ý QUAN TRỌNG: Tuyệt đối không quét hoặc chạm vào lỗ tròn vân tay, hệ thống sẽ báo động.
   + Nếu nhập không được, hãy quay clip thao tác gửi qua Zalo để chủ nhà hỗ trợ.
 
 4. KẾT NỐI & LIÊN HỆ HỖ TRỢ:
-- Pass Wifi: xincamon123
-- Hotline hỗ trợ khẩn cấp / Zalo: 0938459859 (JC) - gọi ngay bất cứ khi nào gặp sự cố, chủ nhà sẽ cho người xử lý đến khi khách hài lòng.
+- Pass Wifi: **xincamon123**
+- Thông tin liên hệ hỗ trợ khẩn cấp:
+  + **Cách nhanh nhất:** Gọi Zalo trực tiếp cho chủ nhà (mình ít xem điện thoại ấy).
+  + **Trường hợp chủ nhà không online (do ở trên máy bay, tàu không có sóng):**
+    * Nhắn tin Zalo (Vui lòng không gọi điện thoại, bạn ấy chỉ trực Zalo thôi): Bạn Minh (trợ lý) - **0985840995**
+    * Hoặc gọi điện thoại trực tiếp (tốc độ xử lý có thể chậm hơn):
+      - Hotline trên Fanpage (Minh): **0914444574** (Zalo của số này hiện do chủ nhà đang giữ).
+      - Hotline ban đêm (Chủ nhà - JC): **0938459859**
+  + **Trường hợp không gấp lắm:** Khách cứ nhắn tin trực tiếp trong nhóm chat này, chủ nhà sẽ trả lời ngay khi online. Có bất kỳ vấn đề gì, dù chỉ nhỏ xíu xiu, chủ nhà sẽ xử lý ngay đến khi khách hài lòng mới thôi.
 
 5. QUY ĐỊNH CHUNG & CHECK-OUT:
 - Không gian nghỉ dưỡng chữa lành: Nghiêm cấm loa di động, không khuyến khích mang theo loa kéo. Nếu có mở nhạc, bắt buộc phải tắt trước 20:00 tối để đảm bảo yên tĩnh cho làng đồng bào.
