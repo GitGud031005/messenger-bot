@@ -74,7 +74,26 @@ THÔNG TIN CỨNG VỀ HỒ NHÀ YÊN (KNOWLEDGE BASE):
   4. Đóng khóa cửa chính (gạt ngược tay cầm lên trên để khóa, thử mở lại để chắc chắn cửa đã khóa).
 
 6. DỊCH VỤ ĂN UỐNG:
-- Đặt món Tây Nguyên tận nhà: Hỗ trợ đặt món như gà nướng cơm lam, thịt heo tộc nướng xiên (setup BBQ từ 10:00 - 22:00 mỗi ngày). Phí setup than, lò là 100k/lần. Thực đơn đa dạng và bình dân, khách có thể nhắn để gửi menu qua Zalo.
+- Đặt món Tây Nguyên tận nhà: Hỗ trợ đặt món như gà nướng cơm lam, thịt heo tộc nướng xiên (setup BBQ từ 10:00 - 22:00 mỗi ngày). Phí setup than, lò là 100k/lần.
+- Thực đơn chính - BIỂN HỒ GARDEN (Hỗ trợ đặt & giao tận homestay):
+  + Khai vị: Chả ram tôm đất 70k, Chả giò Garden 90k, Khoai tây chiên 60k, Đậu khuôn chiên giòn 50k, Đậu khuôn chiên sả 70k, Khổ qua dăm bông 70k.
+  + Gỏi: Bò tái chanh 150k, Bò bóp thấu 150k, Gỏi bắp bò 150k, Gỏi cá trích 150k, Gỏi sứa 100k, Gỏi hải sản 150k, Gỏi ngó sen tôm thịt 150k.
+  + Gà: Tiềm bí đỏ 250k (1/2 con), Tiềm ớt hiểm 250k (1/2 con), Nướng 250k, Hấp hành 300k, Xào sả ớt 150k (1/2 con), Chiên mắm 150k (1/2 con), Gà lá giang 350k.
+  + Heo: Ba chỉ nướng 100k, Ba chỉ lắc sả tắc 100k, Sườn nướng 120k, Heo rừng nướng giấy bạc 120k, Heo rừng xào lăn 150k, Dồi trường xào cải chua 120k, Bao tử xào cải chua 120k, Giò heo muối chiên giòn 200k, Sườn non chiên mắm 100k.
+  + Bò: Nhúng ớt 170k, Salad bò 100k, Lục lắc 150k, Nhúng dấm 170k, Nướng cục 150k, Xào hành cần 150k.
+  + Trứng non: Sốt paté 120k, Cháy tỏi 100k, Xào hành cần 100k.
+  + Tôm: Tôm sốt Thái 150k, Tôm mù tạt 150k, Tôm chiên xù 150k, Tôm hoàng kim 150k.
+  + Cá Lóc: Nướng trui 150k, Chiên xù 150k, Nướng giấy bạc 150k, Hấp bầu 170k, Hấp Hồng Kông 170k.
+  + Cá điêu hồng: Hấp Hồng Kông 150k, Lẩu măng chua 150k, Lẩu Thái 150k, Nấu ngót 150k.
+  + Cá lăng: Om dưa 200k, Măng chua 200k, Nướng muối ớt 150k, Nướng riềng mẻ 150k, Nấu mẻ 200k, Om chuối đậu 200k.
+  + Mực: Hấp hành 150k, Xào hành cần 120k, Chiên xù 120k, Sốt trứng muối 150k, Xào chua ngọt 120k.
+  + Tép biển hồ (theo mùa): Rang hành 80k, Salad 80k.
+  + Cơm - Mì - Cháo: Cơm dương châu 80k, Cơm cá mặn 80k, Cơm chiên tỏi trứng 60k, Cơm chiên dưa bò 90k, Mì xào bò 80k, Mì xào hải sản 80k, Mì xào Singapore 90k, Miến xào bò 90k, Miến xào lòng mề 80k, Cháo lòng mề 50k, Cháo bò bằm 80k, Cháo cá lóc 80k, Cháo hải sản 80k.
+  + Rượu: Rượu ghè 2.5l 170k/ghè, Rượu ghè 6l 220k/ghè, Rượu ghè 8l 270k/ghè.
+  + Các món ăn cơm: Sườn xào chua ngọt 120k, Heo rừng xào sả ớt 120k, Tôm rim ba rọi 120k, Mực xào hành cần 120k, Cá lóc kho tộ 120k, Cá lóc nấu canh chua 80k, Cá lăng kho tộ 120k, Cá lăng nấu canh chua 80k, Gà kho sả ớt 150k, Canh rau cải xanh bò bằm 70k, Ba chỉ rim cháy cạnh 100k, Trứng chiên thịt bằm 70k, Đậu khuôn sốt cà chua 70k, Canh nghêu thì là 80k, Vây cá hồi chiên mắm 120k.
+  + Các loại lẩu: Lẩu hải sản Thái 250k, Cá lăng măng chua 200k, Cá lăng om dưa 200k, Lẩu thập sườn 250k, Điêu hồng nấu ngót 200k, Diêu hồng nấu Thái 150k, Diêu hồng nấu măng chua 200k, Cá lóc nấu ngót 200k, Cá tầm nấu măng chua 200k, Cá tầm om dưa 200k, Lẩu bò đuôi hầm thơm 250k.
+  + Các món rau: Rau muống xào tỏi 50k, Cải thìa xào tỏi 50k, Cải thìa xào bò 80k, Cải thìa sốt bào ngư 80k, Đọt bí xào tỏi 50k, Đọt bí xào bò 80k, Lá mỳ xào 70k, Salad bò 100k, Salad trộn dầu giấm 60k, Rau củ xào thập cẩm 80k, Rau luộc kho quẹt 70k.
+  + Bia & Nước ngọt: Bia gold star 15k/lon, Bia Sài Gòn xanh 16k/lon, Bia Sài Gòn chill 18k/lon, Bia tiger 19k/lon, Bia tiger bạc 20k/lon, Bia heineken 24k/lon; Pepsi 16k/lon, Coca sting 16k/lon, 7up 16k/lon, Red bull 16k/lon.
 - Nhà hàng gần nhà: Có 3 nhà hàng đặc sản đi bộ được (gần nhất là Plei Têng), có hỗ trợ giao tận nơi.
   + Link map Gà nướng Plei Têng: https://maps.app.goo.gl/JMKdPqSZM51uCE7C8?g_st=ic
 - Tự làm BBQ: Bếp có lò nướng và đầy đủ dụng cụ. Khách có thể tự mua đồ hoặc gọi Winmart giao hàng tận nơi (SĐT Winmart: 0962663158).
