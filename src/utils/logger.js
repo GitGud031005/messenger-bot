@@ -3,12 +3,15 @@ const config = require("../config.js");
 
 const { combine, timestamp, printf, colorize, errors, splat } = winston.format;
 
-/**
- * Custom log format: [timestamp] LEVEL module: message
- */
 const logFormat = printf(({ level, message, timestamp, module, ...rest }) => {
   const mod = module ? ` [${module}]` : "";
-  const extra = Object.keys(rest).length ? ` ${JSON.stringify(rest)}` : "";
+  const cleanRest = {};
+  for (const [key, val] of Object.entries(rest)) {
+    if (isNaN(key)) {
+      cleanRest[key] = val;
+    }
+  }
+  const extra = Object.keys(cleanRest).length ? ` ${JSON.stringify(cleanRest)}` : "";
   return `${timestamp} ${level}${mod}: ${message}${extra}`;
 });
 
