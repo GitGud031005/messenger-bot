@@ -7,8 +7,8 @@
  * It reads appstate.json from the project root and outputs a base64 string
  * that you can paste into the APPSTATE_BASE64 environment variable on Render.
  */
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
 const appstatePath = path.resolve("appstate.json");
 

@@ -1,6 +1,7 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import config from "../config.js";
-import { createLogger } from "../utils/logger.js";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const config = require("../config.js");
+const { createLogger } = require("../utils/logger.js");
+const { getPinnedMessages } = require("./database.js");
 
 const log = createLogger("gemini");
 
@@ -8,29 +9,23 @@ const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
 /**
  * System instruction defining the bot's personality and capabilities.
+ * Instructs the AI to strictly rely on pinned messages for group-specific context.
  */
 const SYSTEM_INSTRUCTION = `Bạn là một trợ lý AI thân thiện và hài hước trong nhóm chat Messenger của một nhóm bạn Việt Nam.
 
 Quy tắc:
 - Trả lời bằng tiếng Việt (trừ khi người dùng hỏi bằng tiếng Anh).
 - Nói chuyện tự nhiên, thân thiện, như một người bạn trong nhóm.
-- Khi được nhờ ghi nhớ điều gì đó, hãy xác nhận và ghi nhớ rõ ràng.
-- Khi được hỏi lại về điều đã ghi nhớ, hãy nhắc lại chính xác.
+- Mọi câu trả lời của bạn liên quan đến các thông tin quan trọng, lịch trình, quy định, hoặc thông báo đặc biệt của nhóm phải dựa trên nội dung các tin nhắn đã ghim được cung cấp trong phần ngữ cảnh.
 - Trả lời ngắn gọn, súc tích (dưới 500 từ) trừ khi được yêu cầu giải thích chi tiết.
-- Không sử dụng markdown phức tạp vì Messenger không hiển thị được.
-- Khi đọc tin nhắn ghim (pinned messages), hãy tóm tắt nội dung rõ ràng.
-- Nếu không biết câu trả lời, hãy thành thật nói không biết thay vì bịa.
-
-Khả năng đặc biệt:
-- Ghi nhớ các thông tin quan trọng mà nhóm nhờ nhớ (lịch hẹn, deadline, v.v.)
-- Nhắc nhở khi được hỏi lại
-- Đọc và tóm tắt tin nhắn ghim
-- Trả lời câu hỏi dựa trên ngữ cảnh cuộc hội thoại`;
+- Không sử dụng markdown phức tạp vì Messenger không hiển thị được. Không dùng # hoặc dấu sao quá nhiều.
+- Nếu người dùng hỏi về tin nhắn ghim hoặc hỏi các câu hỏi liên quan đến lịch trình/nội dung nhóm, hãy đọc phần ngữ cảnh ghim và trả lời chính xác dựa trên đó.
+- Nếu thông tin không có trong tin nhắn ghim và bạn không biết, hãy nói rõ là thông tin này chưa được ghim hoặc chia sẻ với bạn.`;
 
 /**
  * Per-thread chat session store.
- * Each entry: { session: ChatSession, lastActive: timestamp, memories: string[] }
- * @type {Map<string, { session: any, lastActive: number, memories: string[] }>}
+ * Each entry: { session: ChatSession, lastActive: timestamp, modelName: string }
+ * @type {Map<string, { session: any, lastActive: number, modelName: string }>}
  */
 const threadSessions = new Map();
 
@@ -65,7 +60,6 @@ function getSession(threadId, modelName) {
   const entry = {
     session,
     lastActive: Date.now(),
-    memories: [],
     modelName,
   };
 
@@ -82,22 +76,22 @@ function getSession(threadId, modelName) {
  * @param {string} [senderName] - Name of the sender for context
  * @returns {Promise<string>} Gemini's response text
  */
-export async function chat(threadId, userMessage, senderName = "User") {
-  // Build context-enriched prompt
+async function chat(threadId, userMessage, senderName = "User") {
+  // Build context-enriched prompt with pinned messages
   const entry = getSession(threadId, config.geminiModel);
   let prompt = `[${senderName}]: ${userMessage}`;
 
-  // Include memories if any
-  if (entry.memories.length > 0) {
-    prompt = `[Những điều cần nhớ: ${entry.memories.join("; ")}]\n\n${prompt}`;
+  const pins = getPinnedMessages(threadId);
+  if (pins.length > 0) {
+    const pinsCtx = pins
+      .map((p, i) => `${i + 1}. [Người ghim: ${p.senderName}]: ${p.content}`)
+      .join("\n");
+    prompt = `[Ngữ cảnh từ tin nhắn ghim của nhóm:\n${pinsCtx}]\n\n${prompt}`;
   }
 
   try {
     const result = await entry.session.sendMessage(prompt);
     const responseText = result.response.text();
-
-    // Check if the bot acknowledged a memory request
-    detectAndStoreMemory(threadId, userMessage, responseText);
 
     log.info(
       "Gemini [%s] responded to thread %s (%d chars)",
@@ -123,10 +117,16 @@ export async function chat(threadId, userMessage, senderName = "User") {
       });
 
       const fallbackChat = fallbackModel.startChat({ history: [] });
-      const result = await fallbackChat.sendMessage(prompt);
-      const responseText = result.response.text();
+      let fallbackPrompt = `[${senderName}]: ${userMessage}`;
+      if (pins.length > 0) {
+        const pinsCtx = pins
+          .map((p, i) => `${i + 1}. [Người ghim: ${p.senderName}]: ${p.content}`)
+          .join("\n");
+        fallbackPrompt = `[Ngữ cảnh từ tin nhắn ghim của nhóm:\n${pinsCtx}]\n\n${fallbackPrompt}`;
+      }
 
-      detectAndStoreMemory(threadId, userMessage, responseText);
+      const result = await fallbackChat.sendMessage(fallbackPrompt);
+      const responseText = result.response.text();
 
       log.info(
         "Gemini [%s FALLBACK] responded to thread %s (%d chars)",
@@ -144,52 +144,15 @@ export async function chat(threadId, userMessage, senderName = "User") {
 }
 
 /**
- * Detect if the user asked the bot to remember something,
- * and store it in thread memory.
- * @param {string} threadId
- * @param {string} userMsg
- * @param {string} botResponse
- */
-function detectAndStoreMemory(threadId, userMsg, botResponse) {
-  const memoryKeywords = [
-    "nhớ giùm", "nhớ dùm", "nhớ giúp", "ghi nhớ", "nhớ là", "nhớ rằng",
-    "remember", "remind me", "note that", "đừng quên", "nhắc nhở",
-    "lưu ý", "ghi lại", "nhớ cho"
-  ];
-
-  const lowerMsg = userMsg.toLowerCase();
-  const isMemoryRequest = memoryKeywords.some((kw) => lowerMsg.includes(kw));
-
-  if (isMemoryRequest) {
-    const entry = threadSessions.get(threadId);
-    if (entry) {
-      // Store the user's message as a memory item
-      const memoryItem = `${new Date().toLocaleDateString("vi-VN")}: ${userMsg}`;
-      entry.memories.push(memoryItem);
-      log.info("Stored memory for thread %s: %s", threadId, memoryItem);
-
-      // Cap memories at 50 to prevent unbounded growth
-      if (entry.memories.length > 50) {
-        entry.memories.shift();
-      }
-    }
-  }
-}
-
-/**
  * Cleanup expired sessions to prevent memory leaks.
  * Called periodically from the main loop.
  */
-export function cleanupSessions() {
+function cleanupSessions() {
   const now = Date.now();
   let cleaned = 0;
 
   for (const [threadId, entry] of threadSessions) {
-    // Only expire sessions with NO memories
-    // Sessions with memories persist longer (10x expiry)
-    const expiry = entry.memories.length > 0 ? MEMORY_EXPIRY_MS * 10 : MEMORY_EXPIRY_MS;
-
-    if (now - entry.lastActive > expiry) {
+    if (now - entry.lastActive > MEMORY_EXPIRY_MS) {
       threadSessions.delete(threadId);
       cleaned++;
     }
@@ -204,6 +167,8 @@ export function cleanupSessions() {
  * Get the number of active chat sessions (for monitoring).
  * @returns {number}
  */
-export function getActiveSessionCount() {
+function getActiveSessionCount() {
   return threadSessions.size;
 }
+
+module.exports = { chat, cleanupSessions, getActiveSessionCount };

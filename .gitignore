@@ -16,3 +16,8 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Database / Bot Data
+Fca_Database/
+database.json
+*.json.bak

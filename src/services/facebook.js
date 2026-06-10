@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
-import login from "@dongdev/fca-unofficial";
-import { createLogger } from "../utils/logger.js";
+const fs = require("fs");
+const path = require("path");
+const login = require("@dongdev/fca-unofficial");
+const { createLogger } = require("../utils/logger.js");
 
 const log = createLogger("facebook");
 const APPSTATE_PATH = path.resolve("appstate.json");
@@ -16,7 +16,7 @@ let botUserId = null;
  * Login to Facebook using saved appstate.json or APPSTATE_BASE64 env var.
  * Returns the FCA API instance.
  */
-export function loginFacebook() {
+function loginFacebook() {
   return new Promise((resolve, reject) => {
     let appState;
 
@@ -120,7 +120,7 @@ export function loginFacebook() {
  * Get the FCA API instance. Throws if not logged in yet.
  * @returns {import("@dongdev/fca-unofficial").IFCAU_API}
  */
-export function getApi() {
+function getApi() {
   if (!api) {
     throw new Error("Facebook API not initialized. Call loginFacebook() first.");
   }
@@ -131,6 +131,8 @@ export function getApi() {
  * Get the bot's own Facebook user ID.
  * @returns {string}
  */
-export function getBotUserId() {
+function getBotUserId() {
   return botUserId;
 }
+
+module.exports = { loginFacebook, getApi, getBotUserId };

@@ -1,4 +1,4 @@
-import { createLogger } from "../utils/logger.js";
+const { createLogger } = require("../utils/logger.js");
 
 const log = createLogger("handler:event");
 
@@ -9,7 +9,7 @@ const log = createLogger("handler:event");
  * @param {object} api - FCA API instance
  * @param {object} event - Event object from FCA
  */
-export async function handleEvent(api, event) {
+async function handleEvent(api, event) {
   switch (event.logMessageType) {
     case "log:subscribe":
       // Someone was added to the group
@@ -42,3 +42,5 @@ export async function handleEvent(api, event) {
       log.debug("Unhandled event type: %s in thread %s", event.logMessageType, event.threadID);
   }
 }
+
+module.exports = { handleEvent };

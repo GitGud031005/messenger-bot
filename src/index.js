@@ -1,11 +1,11 @@
-import http from "http";
-import config from "./config.js";
-import { loginFacebook } from "./services/facebook.js";
-import { cleanupSessions } from "./services/gemini.js";
-import { loadCommands } from "./commands/index.js";
-import { handleMessage } from "./handlers/message.js";
-import { handleEvent } from "./handlers/event.js";
-import { createLogger } from "./utils/logger.js";
+const http = require("http");
+const config = require("./config.js");
+const { loginFacebook } = require("./services/facebook.js");
+const { cleanupSessions } = require("./services/gemini.js");
+const { loadCommands } = require("./commands/index.js");
+const { handleMessage } = require("./handlers/message.js");
+const { handleEvent } = require("./handlers/event.js");
+const { createLogger } = require("./utils/logger.js");
 
 const log = createLogger("main");
 

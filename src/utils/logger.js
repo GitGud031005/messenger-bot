@@ -1,7 +1,7 @@
-import winston from "winston";
-import config from "../config.js";
+const winston = require("winston");
+const config = require("../config.js");
 
-const { combine, timestamp, printf, colorize, errors } = winston.format;
+const { combine, timestamp, printf, colorize, errors, splat } = winston.format;
 
 /**
  * Custom log format: [timestamp] LEVEL module: message
@@ -16,13 +16,14 @@ const logger = winston.createLogger({
   level: config.logLevel,
   format: combine(
     errors({ stack: true }),
+    splat(),
     timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     logFormat
   ),
   transports: [
     // Console with colors
     new winston.transports.Console({
-      format: combine(colorize(), logFormat),
+      format: combine(colorize(), splat(), logFormat),
     }),
     // File for errors
     new winston.transports.File({
@@ -45,8 +46,8 @@ const logger = winston.createLogger({
  * Usage: const log = createLogger("facebook");
  *        log.info("Connected!");
  */
-export function createLogger(moduleName) {
+function createLogger(moduleName) {
   return logger.child({ module: moduleName });
 }
 
-export default logger;
+module.exports = { createLogger, default: logger };

@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
 /**
@@ -37,4 +37,4 @@ const config = Object.freeze({
   logLevel: optional("LOG_LEVEL", "info"),
 });
 
-export default config;
+module.exports = config;

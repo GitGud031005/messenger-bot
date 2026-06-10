@@ -1,10 +1,10 @@
-import { getCommand } from "../commands/index.js";
-import { chat } from "../services/gemini.js";
-import { getBotUserId } from "../services/facebook.js";
-import cooldownManager from "../utils/cooldown.js";
-import { formatReply, formatError } from "../utils/formatter.js";
-import { createLogger } from "../utils/logger.js";
-import config from "../config.js";
+const { getCommand } = require("../commands/index.js");
+const { chat } = require("../services/gemini.js");
+const { getBotUserId } = require("../services/facebook.js");
+const cooldownManager = require("../utils/cooldown.js");
+const { formatReply, formatError } = require("../utils/formatter.js");
+const { createLogger } = require("../utils/logger.js");
+const config = require("../config.js");
 
 const log = createLogger("handler:message");
 
@@ -17,7 +17,7 @@ const log = createLogger("handler:message");
  * @param {object} api - FCA API instance
  * @param {object} event - Message event from FCA
  */
-export async function handleMessage(api, event) {
+async function handleMessage(api, event) {
   const { body, senderID, threadID, messageID, mentions } = event;
 
   // Ignore if no message body
@@ -156,3 +156,5 @@ async function handleMentionTrigger(api, event, botUserId) {
     );
   }
 }
+
+module.exports = { handleMessage };

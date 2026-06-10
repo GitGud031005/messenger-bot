@@ -9,7 +9,7 @@ const MAX_MESSAGE_LENGTH = 20000;
  * @param {number} maxLength
  * @returns {string}
  */
-export function truncate(text, maxLength = MAX_MESSAGE_LENGTH) {
+function truncate(text, maxLength = MAX_MESSAGE_LENGTH) {
   if (!text || text.length <= maxLength) return text;
   const suffix = "\n\n…(tin nhắn đã bị cắt bớt)";
   return text.slice(0, maxLength - suffix.length) + suffix;
@@ -21,7 +21,7 @@ export function truncate(text, maxLength = MAX_MESSAGE_LENGTH) {
  * @param {string} text
  * @returns {string}
  */
-export function stripMarkdown(text) {
+function stripMarkdown(text) {
   if (!text) return text;
   return text
     // Remove headers (# ## ### etc.)
@@ -47,7 +47,7 @@ export function stripMarkdown(text) {
  * @param {string} message
  * @returns {string}
  */
-export function formatError(message) {
+function formatError(message) {
   return `⚠️ Lỗi: ${message}`;
 }
 
@@ -56,6 +56,8 @@ export function formatError(message) {
  * @param {string} text
  * @returns {string}
  */
-export function formatReply(text) {
+function formatReply(text) {
   return truncate(stripMarkdown(text));
 }
+
+module.exports = { truncate, stripMarkdown, formatError, formatReply };

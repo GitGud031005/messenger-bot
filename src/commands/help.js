@@ -1,6 +1,6 @@
-import { getUniqueCommands } from "./index.js";
+const { getUniqueCommands } = require("./index.js");
 
-export default {
+module.exports = {
   name: "help",
   aliases: ["menu", "lệnh"],
   description: "Xem danh sách các lệnh có sẵn",

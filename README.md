@@ -270,6 +270,9 @@ Open the Messenger group chat where the bot account is added, mention (tag) the 
 | Command | Description | Example |
 |---|---|---|
 | `/ai <question>` | Ask the AI anything | `/ai tell a joke` |
+| `/ghim <text>` | Pin a message for AI context | `/ghim Lịch họp nhóm là thứ 7` |
+| `/dsghim` | List all pinned messages | `/dsghim` |
+| `/unghim <index>` | Unpin a message by index number | `/unghim 1` |
 | `/help` | View the list of commands | `/help` |
 | `/ping` | Check if the bot is responsive | `/ping` |
 
@@ -277,28 +280,35 @@ Open the Messenger group chat where the bot account is added, mention (tag) the 
 
 | Alias | Equivalent to |
 |---|---|
-| `/hỏi` | `/ai` |
-| `/ask` | `/ai` |
-| `/menu` | `/help` |
-| `/lệnh` | `/help` |
+| `/hỏi`, `/ask` | `/ai` |
+| `/pin` | `/ghim` |
+| `/pinned`, `/listpin` | `/dsghim` |
+| `/unpin` | `/unghim` |
+| `/menu`, `/lệnh` | `/help` |
 | `/p` | `/ping` |
 
-### Memorization Feature
+### Pinned Messages Feature (AI Context)
 
-The bot will automatically memorize information when you use keywords like:
+The bot learns all group-specific context (schedules, rules, announcements) from the **pinned messages database**. Gemini uses this context to answer group questions accurately.
 
-```
-@Bot nhớ giùm là thứ 6 deadline nộp bài
-@Bot ghi nhớ số điện thoại anh A là 0901234567
-@Bot remind me lịch họp ngày mai lúc 2h chiều
-```
+#### 1. How to Pin a Message
+- **By Replying (Recommended):** Reply to any message in the group chat and type `/ghim` (or `/pin`). The bot will fetch the replied message content and pin it.
+- **Direct Pinning:** Type `/ghim <nội dung>` to pin text directly (e.g., `/ghim Lịch học nhóm là thứ 7 tuần này lúc 8h tối`).
 
-And you can ask it to recall those reminders at any time:
+#### 2. How to View Pinned Messages
+Type `/dsghim` (or `/pinned`) to see the list of all pinned messages with their index numbers.
 
+#### 3. How to Unpin a Message
+Type `/unghim <index>` (or `/unpin <index>`) to unpin a message by its list number (e.g., `/unghim 1`).
+
+#### 4. Ask the AI Based on Pinned Context
+Tag the bot and ask any question:
 ```
-@Bot deadline tuần này là gì?
-@Bot nhắc lại số điện thoại anh A
+@BotName tóm tắt các tin nhắn ghim của nhóm
+@BotName lịch họp là khi nào nhỉ?
+@BotName nội quy nhóm là gì?
 ```
+The bot will read all pinned messages and answer your question strictly from that context!
 
 ---
 

@@ -1,10 +1,8 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath, pathToFileURL } from "url";
-import { createLogger } from "../utils/logger.js";
+const fs = require("fs");
+const path = require("path");
+const { createLogger } = require("../utils/logger.js");
 
 const log = createLogger("commands");
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * Command registry.
@@ -16,16 +14,14 @@ const commands = new Map();
  * Load all command files from the commands directory.
  * Each command file must export: { name, aliases, description, execute }
  */
-export async function loadCommands() {
+async function loadCommands() {
   const commandFiles = fs
     .readdirSync(__dirname)
     .filter((file) => file.endsWith(".js") && file !== "index.js");
 
   for (const file of commandFiles) {
     try {
-      const filePath = pathToFileURL(path.join(__dirname, file)).href;
-      const command = await import(filePath);
-      const cmd = command.default;
+      const cmd = require(path.join(__dirname, file));
 
       if (!cmd?.name || !cmd?.execute) {
         log.warn("Skipping invalid command file: %s (missing name or execute)", file);
@@ -56,7 +52,7 @@ export async function loadCommands() {
  * @param {string} name
  * @returns {object|undefined}
  */
-export function getCommand(name) {
+function getCommand(name) {
   return commands.get(name.toLowerCase());
 }
 
@@ -64,10 +60,12 @@ export function getCommand(name) {
  * Get all unique commands (no duplicates from aliases).
  * @returns {object[]}
  */
-export function getUniqueCommands() {
+function getUniqueCommands() {
   const unique = new Map();
   for (const cmd of commands.values()) {
     unique.set(cmd.name, cmd);
   }
   return Array.from(unique.values());
 }
+
+module.exports = { loadCommands, getCommand, getUniqueCommands };

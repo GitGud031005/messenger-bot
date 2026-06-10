@@ -1,10 +1,10 @@
-import { chat } from "../services/gemini.js";
-import { formatReply, formatError } from "../utils/formatter.js";
-import { createLogger } from "../utils/logger.js";
+const { chat } = require("../services/gemini.js");
+const { formatReply, formatError } = require("../utils/formatter.js");
+const { createLogger } = require("../utils/logger.js");
 
 const log = createLogger("cmd:ai");
 
-export default {
+module.exports = {
   name: "ai",
   aliases: ["hỏi", "ask"],
   description: "Hỏi AI bất cứ điều gì — Ví dụ: /ai hôm nay trời thế nào?",

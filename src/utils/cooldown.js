@@ -1,4 +1,4 @@
-import config from "../config.js";
+const config = require("../config.js");
 
 /**
  * Per-user cooldown tracker to prevent spam and protect API quota.
@@ -57,4 +57,4 @@ const cooldownManager = new CooldownManager();
 // Cleanup every 10 minutes
 setInterval(() => cooldownManager.cleanup(), 10 * 60 * 1000);
 
-export default cooldownManager;
+module.exports = cooldownManager;

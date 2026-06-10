@@ -1,6 +1,6 @@
-import { getActiveSessionCount } from "../services/gemini.js";
+const { getActiveSessionCount } = require("../services/gemini.js");
 
-export default {
+module.exports = {
   name: "ping",
   aliases: ["p"],
   description: "Kiểm tra bot có đang hoạt động không",
