@@ -1,0 +1,25 @@
+{
+  "name": "messenger-bot",
+  "version": "1.0.0",
+  "description": "AI-powered Facebook Messenger group chat bot using Google Gemini",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "messenger",
+    "bot",
+    "gemini",
+    "ai",
+    "facebook"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@dongdev/fca-unofficial": "^4.0.3",
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.4.2",
+    "winston": "^3.19.0"
+  }
+}
