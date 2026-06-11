@@ -118,7 +118,40 @@ THÔNG TIN CỨNG VỀ HỒ NHÀ YÊN (KNOWLEDGE BASE):
 - Thủ tục thuê xe:
   + Khách từ 18 tuổi trở lên, có giấy phép lái xe bản gốc hoặc VNeID (không bị tạm giữ).
   + Giữ lại CCCD/Hộ chiếu gốc và chụp ảnh bằng lái. Nhận cọc trước 50% tổng số tiền thuê để giữ xe.
-  + LƯU Ý BẢO QUẢN XE: Mất xe phải đền bù. Ban đêm bắt buộc phải dắt xe vào trong nhà (có đường dắt lên hàn chân sắt chống trượt), không để xe ngoài sân.`;
+  + LƯU Ý BẢO QUẢN XE: Mất xe phải đền bù. Ban đêm bắt buộc phải dắt xe vào trong nhà (có đường dắt lên hàn chân sắt chống trượt), không để xe ngoài sân.
+
+8. LỊCH TRÌNH DI CHUYỂN & Ý TƯỞNG ĂN UỐNG CỦA KHÁCH (LỊCH TRÌNH PLEIKU):
+- Ý tưởng Cafe & Ăn uống:
+  + Cafe sáng: Cafe Thu Hà (60 năm, gần chùa phía nam), Lem Cafe (cạnh hồ).
+  + Cafe tối: Ngày Bình Yên (trung tâm), Hani Kafe.
+  + Ăn sáng: Phở Nhớ Phố Núi / Phở khô Hồng, Bún cua (19 Trần Quốc Toản), Bánh xèo Cô Lý.
+  + Ăn tối: Chè Bà Dũng, Cơm gà nướng Ksor Hnao, Chợ đêm, Chill Lưng Chừng.
+- Lịch trình chi tiết:
+  + Ngày 1:
+    * 7h30: Đáp máy bay, đi grab lấy xe máy tại 107 Sư Vạn Hạnh (Liên hệ SĐT: 0899368272).
+    * 8h-9h: Ăn sáng phở khô Hồng, uống cà phê cổ Thu Hà gần đó.
+    * 9h-10h30: Đi chùa Minh Thành.
+    * 10h30-12h: Đi công viên Diên Hồng.
+    * 12h-13h30: Ăn trưa bánh xèo Cô Lý (nếu đói ăn thêm bún cua Trần Quốc Toản).
+    * 14h: Nhận phòng homestay và nghỉ ngơi.
+    * 15h30-17h30: Đi chơi phía nam Biển Hồ, vườn hoa.
+    * 18h-19h30: Đi ăn cơm lam gà nướng Ksor Hnao.
+    * 20h-21h30: Đi chơi Quảng trường Đoàn Kết, chợ đêm Pleiku, ăn chè Bà Dũng. Trả xe máy tại 107 Sư Vạn Hạnh lúc 21h.
+    * 21h30-22h: Cafe Ngày Bình Yên.
+  + Ngày 2:
+    * 4h30: Xuất phát đi K50 (xe sang đón gần nhà).
+    * 19h: Về đến homestay nghỉ ngơi, ăn đồ nướng buổi tối tại nhà.
+  + Ngày 3 (Ngày sống vội):
+    * 8h: Nhận xe máy thuê ở nhà hàng xóm, đi uống Lem Cafe.
+    * 9h-11h: Về homestay nghỉ ngơi và check-out trả phòng (có thể gửi đồ tại nhà hàng xóm).
+    * 12h-13h: Ăn gà nướng Pleiteng hoặc nhà hàng Tơ Nưng Biển Hồ (tùy kinh phí).
+    * 13h-15h: Đi chơi núi lửa Chư Đăng Ya.
+    * 15h30-17h: Đi đồi chè và hàng thông cổ thụ. Đến 17h quay lại nhà hàng xóm trả xe máy và lấy đồ gửi.
+    * 17h30: Đến sân bay ra về.
+- Các địa điểm dự phòng (nếu còn thời gian): Bãi bồi Tiên Sơn, đập Tân Sơn, làng dân tộc Plei Ốp, thác 3 tầng.
+- Lưu ý đặc biệt:
+  + Mua thảm trải.
+  + Thuê xe: Ngày 1 thuê tại 107 Sư Vạn Hạnh (trả lúc 21h). Ngày 3 thuê xe nhà hàng xóm, có thể gửi đồ, đến 17h quay lại lấy và bắt grab ra sân bay. Chi phí thuê xe 2 ngày (chưa xăng): 150*3*2 = 900k.`;
 
 /**
  * Per-thread chat session store.
